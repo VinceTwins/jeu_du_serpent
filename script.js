@@ -8,6 +8,8 @@ window.onload = function() {
     var delay = 100;
     var snakee;
     var applee;
+    var widthInBlock = canvasWidth / blockSize;
+    var heightInBlock = canvasHeight / blockSize;
 
     
     init();
@@ -28,12 +30,16 @@ window.onload = function() {
     }
 
     function refreshCanvas() { // pour avoir cette sensation de déplacement on efface tout le canvas et on redessine le serpent un bloc plus loin
-        
-        ctx.clearRect(0, 0, canvasWidth, canvasHeight);
         snakee.advance();
-        snakee.draw();
-        applee.draw();
-        setTimeout(refreshCanvas,delay);        
+        if (snakee.checkCollision()) {
+            //game over
+        } else {
+            ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+            snakee.draw();
+            applee.draw();
+            setTimeout(refreshCanvas,delay);
+        }
+                
     }
 
     function drawBlock(ctx, position) { // on dessine le serpent à la bonne place
@@ -96,6 +102,34 @@ window.onload = function() {
                 this.direction = newDirection;
             }
         };
+
+        this.checkCollision = function() {
+            var wallCollision = false;
+            var snakeCollision = false;
+            var head = this.body[0];
+            var rest = this.body.slice(1);
+            var snakeX = head[0];
+            var snakeY = head[1];
+            var minX = 0;
+            var minY = 0;
+            var maxX = widthInBlock - 1;
+            var maxY = heightInBlock - 1;
+            var stillNotInsideCanvasX = snakeX < minX || snakeX > maxX;
+            var stillNotInsideCanvasY = snakeY < minY || snakeY > maxY;
+            
+            if (stillNotInsideCanvasX || stillNotInsideCanvasY) {
+                wallCollision = true;
+            }
+
+            for (var i = 0; i < rest.length; i++) {
+                if (snakeX === rest[i][0] && snakeY === rest[i][1]) {
+                    snakeCollision = true;
+                }
+            }
+
+            return wallCollision || snakeCollision;
+        };
+
     }
 
     function Apple(position) {
