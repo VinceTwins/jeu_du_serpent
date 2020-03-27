@@ -22,7 +22,10 @@ window.onload = function() {
         var canvas = document.createElement("canvas");
         canvas.width = canvasWidth;
         canvas.height = canvasHeight;
-        canvas.style.border = "1px solid";
+        canvas.style.border = "30px solid grey";
+        canvas.style.display = "block";
+        canvas.style.margin = "50px auto";
+        canvas.style.backgroundColor = "black";
         // eslint-disable-next-line no-undef
         document.body.appendChild(canvas);
         ctx = canvas.getContext("2d");
@@ -46,9 +49,9 @@ window.onload = function() {
                 while(applee.isOnSnake(snakee));
             }
             ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+            drawScore();
             snakee.draw();
             applee.draw();
-            drawScore();
             setTimeout(refreshCanvas,delay);
         }
                 
@@ -56,8 +59,18 @@ window.onload = function() {
 
     function gameOver() {
         ctx.save();
-        ctx.fillText("Game Over", 5, 15);
-        ctx.fillText("Defonce la barre d'espace avec gentillesse si tu veux rejouer", 5, 30);
+        ctx.font = "bold 30px sans-serif";
+        ctx.fillStyle = "white";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.strokeStyle = "gray";
+        ctx.lineWidth = 5;
+        var centreX = canvasWidth / 2;
+        var centreY = canvasHeight / 2;
+        ctx.strokeText("Game Over", centreX, centreY - 180);
+        ctx.fillText("Game Over", centreX, centreY - 180);
+        ctx.strokeText("Defonce la barre d'espace avec gentillesse si tu veux rejouer", centreX, centreY - 130);
+        ctx.fillText("Defonce la barre d'espace avec gentillesse si tu veux rejouer", centreX, centreY - 130);
         ctx.restore();
     }
 
@@ -70,7 +83,13 @@ window.onload = function() {
 
     function drawScore() {
         ctx.save();
-        ctx.fillText(score.toString(), 80, canvasHeight - 5 );
+        ctx.font = "bold 200px sans-serif";
+        ctx.fillStyle = "rgba(255,255,255,0.5";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        var centreX = canvasWidth / 2;
+        var centreY = canvasHeight / 2;
+        ctx.fillText(score.toString(), centreX, centreY );
         ctx.restore();
     }
 
