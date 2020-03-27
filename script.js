@@ -32,7 +32,7 @@ window.onload = function() {
     function refreshCanvas() { // pour avoir cette sensation de déplacement on efface tout le canvas et on redessine le serpent un bloc plus loin
         snakee.advance();
         if (snakee.checkCollision()) {
-            //game over
+            gameOver();
         } else {
             if (snakee.isEatingApple(applee)) {
                 snakee.eatApple = true;
@@ -47,6 +47,19 @@ window.onload = function() {
             setTimeout(refreshCanvas,delay);
         }
                 
+    }
+
+    function gameOver() {
+        ctx.save();
+        ctx.fillText("Game Over", 5, 15);
+        ctx.fillText("Défonce la barre d'espace avec gentillesse si tu veux rejouer", 5, 15);
+        ctx.restore();
+    }
+
+    function restart() {
+        snakee = new Snake([[6,4], [5,4], [4,4]], "right"); // création du serpent snakee avec 3 blocs
+        applee = new Apple([10,10]);
+        refreshCanvas();
     }
 
     function drawBlock(ctx, position) { // on dessine le serpent à la bonne place
@@ -200,6 +213,9 @@ window.onload = function() {
         case 40:
             newDirection = "down";
             break;
+        case 32:
+            restart();
+            return;
         default:
             return;
         }
