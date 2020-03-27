@@ -11,6 +11,8 @@ window.onload = function() {
     var widthInBlock = canvasWidth / blockSize;
     var heightInBlock = canvasHeight / blockSize;
     var score;
+    var timeOut;
+
 
 
     
@@ -52,7 +54,7 @@ window.onload = function() {
             drawScore();
             snakee.draw();
             applee.draw();
-            setTimeout(refreshCanvas,delay);
+            timeOut = setTimeout(refreshCanvas,delay);
         }
                 
     }
@@ -78,6 +80,7 @@ window.onload = function() {
         snakee = new Snake([[6,4], [5,4], [4,4]], "right"); // création du serpent snakee avec 3 blocs
         applee = new Apple([10,10]);
         score = 0;
+        clearTimeout(timeOut);
         refreshCanvas();
     }
 
