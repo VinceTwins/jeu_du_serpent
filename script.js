@@ -10,6 +10,8 @@ window.onload = function() {
     var applee;
     var widthInBlock = canvasWidth / blockSize;
     var heightInBlock = canvasHeight / blockSize;
+    var score;
+
 
     
     init();
@@ -26,6 +28,7 @@ window.onload = function() {
         ctx = canvas.getContext("2d");
         snakee = new Snake([[6,4], [5,4], [4,4]], "right"); // création du serpent snakee avec 3 blocs
         applee = new Apple([10,10]);
+        score = 0;
         refreshCanvas();        
     }
 
@@ -35,6 +38,7 @@ window.onload = function() {
             gameOver();
         } else {
             if (snakee.isEatingApple(applee)) {
+                score ++;
                 snakee.eatApple = true;
                 do {
                     applee.setNewPosition();
@@ -44,6 +48,7 @@ window.onload = function() {
             ctx.clearRect(0, 0, canvasWidth, canvasHeight);
             snakee.draw();
             applee.draw();
+            drawScore();
             setTimeout(refreshCanvas,delay);
         }
                 
@@ -52,14 +57,21 @@ window.onload = function() {
     function gameOver() {
         ctx.save();
         ctx.fillText("Game Over", 5, 15);
-        ctx.fillText("Défonce la barre d'espace avec gentillesse si tu veux rejouer", 5, 15);
+        ctx.fillText("Defonce la barre d'espace avec gentillesse si tu veux rejouer", 5, 30);
         ctx.restore();
     }
 
     function restart() {
         snakee = new Snake([[6,4], [5,4], [4,4]], "right"); // création du serpent snakee avec 3 blocs
         applee = new Apple([10,10]);
+        score = 0;
         refreshCanvas();
+    }
+
+    function drawScore() {
+        ctx.save();
+        ctx.fillText(score.toString(), 80, canvasHeight - 5 );
+        ctx.restore();
     }
 
     function drawBlock(ctx, position) { // on dessine le serpent à la bonne place
