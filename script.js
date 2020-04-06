@@ -1,8 +1,8 @@
 // eslint-disable-next-line no-undef
 window.onload = function() {
 
-    var canvasWidth = 1300;
-    var canvasHeight = 600;
+    var canvasWidth = 1100;
+    var canvasHeight = 400;
     var blockSize = 10;
     var ctx;
     var delay = 100;
